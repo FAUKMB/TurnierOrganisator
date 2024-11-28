@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" style="-fx-padding: 10;"
+            fx:controller="de.gaustadtasv.turnierorganisator.execution.ExecutionKnockoutController">
+
+    <!-- Headline -->
+    <top>
+        <Label fx:id="headline" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-alignment: center;"
+               BorderPane.alignment="CENTER"/>
+    </top>
+
+    <!-- Scrollable list of labels on the left -->
+    <!-- Main content (Left and Center) -->
+    <center>
+        <HBox spacing="10">
+            <!-- Scrollable list of labels on the left -->
+            <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS">
+                <VBox fx:id="matches" spacing="10" style="-fx-padding: 10;">
+                </VBox>
+            </ScrollPane>
+
+            <!-- Tables on the right -->
+            <VBox spacing="20" style="-fx-padding: 10;" HBox.hgrow="ALWAYS">
+                <!-- First Table -->
+                <TableView fx:id="tableA">
+                    <columns>
+                        <TableColumn text="Platzierung">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="position"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="teamName"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Torverhältnis">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="goals"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Punkte">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="points"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <TableView fx:id="tableB">
+                    <columns>
+                        <TableColumn text="Platzierung">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="position"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="teamName"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Torverhältnis">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="goals"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Punkte">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="points"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+
+                <!-- Third Table -->
+                <TableView fx:id="tableGesamt">
+                    <columns>
+                        <TableColumn text="Platzierung">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="position"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Name">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="teamName"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <Button text="Berechne Tabellen" onAction="#tabelleBerechnenOnClick"/>
+                <Button text="Turnier speichern" onAction="#saveOnClick"/>
+            </VBox>
+        </HBox>
+    </center>
+
+</BorderPane>
+
+

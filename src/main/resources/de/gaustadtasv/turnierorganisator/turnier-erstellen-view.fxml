@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox spacing="5.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="de.gaustadtasv.turnierorganisator.configuration.ConfigurationController">
+
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+
+    <Label text="Konfiguration"/>
+    <Label text="Name" alignment="BASELINE_LEFT"/>
+    <TextField promptText="Turniername" fx:id="name"/>
+    <Label text="Spielzeit" alignment="TOP_LEFT"/>
+    <TextField promptText="Spielzeit" fx:id="spielzeit"/>
+    <Label text="Pause"/>
+    <TextField promptText="Pausenzeit" fx:id="pause"/>
+    <Label text="Startzeit"/>
+    <TextField promptText="Startzeit" fx:id="starttime"/>
+    <Label text="Mannschaften"/>
+    <VBox fx:id="teamList" spacing="10"/>
+    <ComboBox fx:id="modus" value="Modus">
+        <items>
+            <FXCollections fx:factory="observableArrayList"/>
+        </items>
+    </ComboBox>
+    <Button text="Zurück" onAction="#onBackButtonClick"/>
+    <Button text="Erstellen" onAction="#onErstellenButtonClick"/>
+    <Label fx:id="errorText"/>
+
+</VBox>
