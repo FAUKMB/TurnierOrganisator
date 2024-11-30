@@ -89,7 +89,10 @@
                         </TableColumn>
                     </columns>
                 </TableView>
-                <Button text="Berechne Tabellen" onAction="#tabelleBerechnenOnClick"/>
+                <HBox>
+                    <Button text="Berechne Tabellen" onAction="#tabelleBerechnenOnClick"/>
+                    <Button text="Export als txt" onAction="#exportToTxtOnClick"/>
+                </HBox>
                 <Button text="Turnier speichern" onAction="#saveOnClick"/>
             </VBox>
         </HBox>

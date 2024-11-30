@@ -5,6 +5,7 @@ import de.gaustadtasv.turnierorganisator.execution.table.GroupTable;
 import de.gaustadtasv.turnierorganisator.execution.table.TableCalculator;
 import de.gaustadtasv.turnierorganisator.execution.table.TableLineWithPoints;
 import de.gaustadtasv.turnierorganisator.execution.table.TableLineWithoutPoints;
+import de.gaustadtasv.turnierorganisator.persistence.TxtFileExporter;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
@@ -32,6 +33,13 @@ public class ExecutionKnockoutController extends ExecutionController {
         List<String> allTeams = TableCalculator.calculateTableGesamtKnockout(state.getMatchplan());
         List<TableLineWithoutPoints> tableLinesGesamt = mapTeamlistToTableLinesWithoutPoints(allTeams);
         tableGesamt.setItems(FXCollections.observableArrayList(tableLinesGesamt));
+    }
+
+    @Override
+    protected void exportTablesToTxt(TurnierExecutionState state, TxtFileExporter fileExporter) {
+        exportGroupTables(state, fileExporter);
+        List<String> tableGeamt = TableCalculator.calculateTableGesamtKnockout(state.getMatchplan());
+        fileExporter.exportTableWithoutPoints(tableGeamt);
     }
 
     private static List<TableLineWithoutPoints> mapTeamlistToTableLinesWithoutPoints(List<String> teamList) {

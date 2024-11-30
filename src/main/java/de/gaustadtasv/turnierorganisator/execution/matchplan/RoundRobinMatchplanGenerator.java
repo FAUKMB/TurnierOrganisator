@@ -3,7 +3,7 @@ package de.gaustadtasv.turnierorganisator.execution.matchplan;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoundRobinMatchplanGenerator extends MatchplanGenerator {
+public class RoundRobinMatchplanGenerator extends GroupWithoutKnockoutMatchplanGenerator {
     protected RoundRobinMatchplanGenerator(List<String> teamnames) {
         super(teamnames);
     }
@@ -46,10 +46,10 @@ public class RoundRobinMatchplanGenerator extends MatchplanGenerator {
 
 
     private List<Match> five() {
-        return group5(teamnames);
+        return group(teamnames, "");
     }
 
     private List<Match> four() {
-        return group4(teamnames);
+        return group(teamnames, "");
     }
 }

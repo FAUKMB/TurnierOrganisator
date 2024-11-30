@@ -23,11 +23,11 @@ public class LoadingController {
     @FXML
     public void initialize() {
         try {
-            StatePersistenceHelper.createConfigFolderIfNotExist();
+            StatePersistenceUtils.createConfigFolderIfNotExist();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(StatePersistenceHelper.CONFIG_FOLDER)) {
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(StatePersistenceUtils.CONFIG_FOLDER)) {
             for (Path path : stream) {
                 configList.getItems().add(path.getFileName().toString().split(".json")[0]);
             }
@@ -39,7 +39,7 @@ public class LoadingController {
             String selectedItem = configList.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
                 try {
-                    StatePersistenceHelper.loadStateFromFile(selectedItem);
+                    StatePersistenceUtils.loadStateFromFile(selectedItem);
                 } catch (FileNotFoundException e) {
                     throw new RuntimeException(e);
                 }

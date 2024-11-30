@@ -1,5 +1,6 @@
 package de.gaustadtasv.turnierorganisator.execution;
 
+import de.gaustadtasv.turnierorganisator.configuration.TurnierConfiguration;
 import de.gaustadtasv.turnierorganisator.execution.matchplan.Match;
 import de.gaustadtasv.turnierorganisator.execution.matchplan.MatchLine;
 import de.gaustadtasv.turnierorganisator.execution.matchplan.Matchplan;
@@ -7,7 +8,8 @@ import de.gaustadtasv.turnierorganisator.execution.table.GroupTable;
 import de.gaustadtasv.turnierorganisator.execution.table.TableCalculator;
 import de.gaustadtasv.turnierorganisator.execution.table.TableLineWithPoints;
 import de.gaustadtasv.turnierorganisator.execution.table.Team;
-import de.gaustadtasv.turnierorganisator.persistence.StatePersistenceHelper;
+import de.gaustadtasv.turnierorganisator.persistence.StatePersistenceUtils;
+import de.gaustadtasv.turnierorganisator.persistence.TxtFileExporter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -72,22 +74,41 @@ public abstract class ExecutionController {
 
     public void saveOnClick(ActionEvent actionEvent) {
         try {
-            StatePersistenceHelper.storeStateToFile();
+            StatePersistenceUtils.storeStateToFile();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
 
     protected static List<GroupTable> calculateGroupTables(TurnierExecutionState state) {
-
-        List<String> teamnamesGroupA = state.getMatchplan().teamnamesGroupA();
-        List<Team> groupA = TableCalculator.calculateTableForGroup(state.getMatchplan().getMatchListGroup(), teamnamesGroupA, true);
+        List<Team> groupA = calculateGroupTable(state.getMatchplan().teamnamesGroupA(), state.getMatchplan());
         List<TableLineWithPoints> tableLinesA = mapTeamlistToTableLinesWithPoints(groupA);
 
-        List<String> teamnamesGroupB = state.getMatchplan().teamnamesGroupB();
-        List<Team> groupB = TableCalculator.calculateTableForGroup(state.getMatchplan().getMatchListGroup(), teamnamesGroupB, true);
+        List<Team> groupB = calculateGroupTable(state.getMatchplan().teamnamesGroupB(), state.getMatchplan());
         List<TableLineWithPoints> tableLinesB = mapTeamlistToTableLinesWithPoints(groupB);
 
         return List.of(new GroupTable(tableLinesA), new GroupTable(tableLinesB));
+    }
+
+    protected static List<Team> calculateGroupTable(List<String> teams, Matchplan matchplan) {
+        return TableCalculator.calculateTableForGroup(matchplan.getMatchListGroup(), teams, true);
+    }
+
+    public void exportToTxtOnClick(ActionEvent actionEvent) {
+        TurnierExecutionState state = TurnierExecutionState.getInstance();
+        TurnierConfiguration configuration = state.getConfiguration();
+        TxtFileExporter fileExporter = new TxtFileExporter(configuration.name(), configuration.gametime(), configuration.pause(), configuration.starttime());
+        fileExporter.cleanupExportFiles();
+        fileExporter.exportMatchplanToTxt(state.getMatchplan());
+        exportTablesToTxt(state, fileExporter);
+    }
+
+    protected abstract void exportTablesToTxt(TurnierExecutionState state, TxtFileExporter fileExporter);
+
+    protected void exportGroupTables(TurnierExecutionState state, TxtFileExporter fileExporter) {
+        List<Team> groupTableA = calculateGroupTable(state.getMatchplan().teamnamesGroupA(), state.getMatchplan());
+        fileExporter.exportTableWithPoints(groupTableA, "Gruppe A");
+        List<Team> groupTableB = calculateGroupTable(state.getMatchplan().teamnamesGroupB(), state.getMatchplan());
+        fileExporter.exportTableWithPoints(groupTableB, "Gruppe B");
     }
 }

@@ -12,13 +12,13 @@ public class Matchplan {
     private List<Match> matchListGroup;
     private List<Match> matchListsemiFinal;
     private List<Match> matchListKnockout;
-    private MatchplanGenerator generator;
+    private GroupWithoutKnockoutMatchplanGenerator generator;
 
     public Matchplan(TurnierConfiguration configuration) {
         generator = switch (configuration.modus()) {
             case GROUP_WITH_KO -> new GroupWithKnockoutMatchplanGenerator(configuration.teams());
             case GROUP_WITH_KO_SEMI_FINAL -> new GroupWithKnockoutSemiMatchplanGenerator(configuration.teams());
-            case GROUP_WITHOUT_KO -> new MatchplanGenerator(configuration.teams());
+            case GROUP_WITHOUT_KO -> new GroupWithoutKnockoutMatchplanGenerator(configuration.teams());
             case ROUND_ROBIN -> new RoundRobinMatchplanGenerator(configuration.teams());
         };
         matchListGroup = generator.generateMatchesGroup();

@@ -16,6 +16,7 @@ public enum Modus {
     private final List<Integer> allowedNubmerOfTeams;
     private final View executionView;
 
+
     Modus(String printableOption, List<Integer> allowedNubmerOfTeams, View executionView) {
         this.printableOption = printableOption;
         this.allowedNubmerOfTeams = allowedNubmerOfTeams;

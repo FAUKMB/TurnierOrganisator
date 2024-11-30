@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalTime;
 
-public class StatePersistenceHelper {
+public class StatePersistenceUtils {
     public static final Path CONFIG_FOLDER = Path.of("configurations");
 
     public static void storeStateToFile() throws IOException {

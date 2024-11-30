@@ -3,10 +3,10 @@ package de.gaustadtasv.turnierorganisator.execution.matchplan;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchplanGenerator {
+public class GroupWithoutKnockoutMatchplanGenerator {
     protected List<String> teamnames;
 
-    protected MatchplanGenerator(List<String> teamnames) {
+    protected GroupWithoutKnockoutMatchplanGenerator(List<String> teamnames) {
         this.teamnames = teamnames;
     }
 
@@ -19,12 +19,15 @@ public class MatchplanGenerator {
         };
     }
 
-    protected List<Match> group3(List<String> teamnames, String groupName) {
-        //TODO
-        return List.of();
+    private List<Match> group3(List<String> teamnames, String groupName) {
+        return List.of(
+                new Match(teamnames.get(0), teamnames.get(1), groupName),
+                new Match(teamnames.get(1), teamnames.get(2), groupName),
+                new Match(teamnames.get(2), teamnames.get(0), groupName)
+        );
     }
 
-    protected List<Match> group4(List<String> teamnames, String groupName) {
+    private List<Match> group4(List<String> teamnames, String groupName) {
         return List.of(
                 new Match(teamnames.get(0), teamnames.get(1), groupName),
                 new Match(teamnames.get(2), teamnames.get(3), groupName),
@@ -43,15 +46,7 @@ public class MatchplanGenerator {
         return teamnames.subList(teamnames.size() / 2 + teamnames.size() % 2, teamnames.size());
     }
 
-    protected List<Match> group5(List<String> teamnames) {
-        return group5(teamnames, "");
-    }
-
-    protected List<Match> group4(List<String> teamnames) {
-        return group4(teamnames, "");
-    }
-
-    protected List<Match> group5(List<String> teamnames, String groupName) {
+    private List<Match> group5(List<String> teamnames, String groupName) {
         return List.of(
                 new Match(teamnames.get(0), teamnames.get(1), groupName),
                 new Match(teamnames.get(3), teamnames.get(2), groupName),
@@ -64,11 +59,6 @@ public class MatchplanGenerator {
                 new Match(teamnames.get(0), teamnames.get(3), groupName),
                 new Match(teamnames.get(1), teamnames.get(4), groupName)
         );
-    }
-
-    protected List<Match> reverseGroup4(List<String> teamnames, String groupName) {
-        List<Match> matches = group4(teamnames, groupName);
-        return reverseGroup(matches);
     }
 
     private List<Match> reverseGroup(List<Match> matches) {

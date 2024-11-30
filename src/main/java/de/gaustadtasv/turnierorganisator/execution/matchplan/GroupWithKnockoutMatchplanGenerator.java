@@ -3,7 +3,7 @@ package de.gaustadtasv.turnierorganisator.execution.matchplan;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupWithKnockoutMatchplanGenerator extends MatchplanGenerator {
+public class GroupWithKnockoutMatchplanGenerator extends GroupWithoutKnockoutMatchplanGenerator {
     protected GroupWithKnockoutMatchplanGenerator(List<String> teamnames) {
         super(teamnames);
     }

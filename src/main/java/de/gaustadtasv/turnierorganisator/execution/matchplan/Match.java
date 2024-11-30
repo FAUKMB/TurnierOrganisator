@@ -57,4 +57,12 @@ public class Match {
         return goals1 + ":" + goals2;
     }
 
+    public String exportToTxt() {
+        String exportLine = title + " " + teamname1 + " - " + teamname2;
+        if (matchPlayed) {
+            exportLine += " " + goals1 + ":" + goals2;
+        }
+        return exportLine;
+    }
+
 }

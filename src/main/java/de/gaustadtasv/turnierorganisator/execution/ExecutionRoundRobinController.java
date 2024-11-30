@@ -3,6 +3,7 @@ package de.gaustadtasv.turnierorganisator.execution;
 import de.gaustadtasv.turnierorganisator.execution.table.TableCalculator;
 import de.gaustadtasv.turnierorganisator.execution.table.TableLineWithPoints;
 import de.gaustadtasv.turnierorganisator.execution.table.Team;
+import de.gaustadtasv.turnierorganisator.persistence.TxtFileExporter;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableView;
 
@@ -17,6 +18,12 @@ public class ExecutionRoundRobinController extends ExecutionController {
         List<Team> teams = TableCalculator.calculateTableForGroup(state.getMatchplan().getMatchListGroup(), state.getConfiguration().teams(), true);
         List<TableLineWithPoints> tableLines = mapTeamlistToTableLinesWithPoints(teams);
         tableGesamt.setItems(FXCollections.observableArrayList(tableLines));
+    }
+
+    @Override
+    protected void exportTablesToTxt(TurnierExecutionState state, TxtFileExporter fileExporter) {
+        List<Team> teams = TableCalculator.calculateTableForGroup(state.getMatchplan().getMatchListGroup(), state.getConfiguration().teams(), true);
+        fileExporter.exportTableWithPoints(teams, "Tabelle");
     }
 
 }
